@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Social-media backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shaheedha555/Social-media.git"
+  },
+  "author": "Shaheedha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shaheedha555/Social-media/issues"
+  },
+  "homepage": "https://github.com/Shaheedha555/Social-media#readme"
+}
