@@ -24,11 +24,11 @@ const UserSchema = new Schema({
   userDetails: {
       gender: {
         type: String,
-        required: true,
-        enum: ['male', 'female']
+        // required: true, 
+        enum: ['male', 'female','other'],
       },
-      age: {
-        type: Number,
+      birthDate: {
+        type: Date,
         required: true
       },
       about: {
@@ -58,8 +58,8 @@ const UserSchema = new Schema({
     default: true
   },
   verified :{
-    type: Array,
-    default:["notMobile","notEmail"] 
+    type: Object,
+    default:{mobile : false, email : false} 
   },
   accountCreatedAt: {
     type: Date,

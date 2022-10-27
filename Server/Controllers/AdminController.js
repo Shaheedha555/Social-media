@@ -17,6 +17,7 @@ const adminLogin = async(req,res,next)=>{
             req.admin = admin
               
             res.json({
+                status:true,
                 token: token
             })
         }else{
@@ -32,6 +33,7 @@ const adminLogin = async(req,res,next)=>{
 const generateToken = (id)=>{
     return jwt.sign({ id }, process.env.JWT_SECRET,{expiresIn : '30d'})
 } 
+
 
 module.exports ={
     adminLogin

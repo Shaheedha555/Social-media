@@ -1,0 +1,174 @@
+@import '../../Variables.scss';
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 20vh; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    position: relative;
+    // background-color: #fefefe;
+    background: $Light;
+    backdrop-filter: blur(8.5px);
+
+    margin: auto;
+    padding: 1rem 2rem;
+    border: 1px solid #888;
+    width: 40%;
+    // box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+
+  }
+  .modal-content2 {
+    position: relative;
+    // background-color: #fefefe;
+    background: $Light;
+    backdrop-filter: blur(8.5px);
+
+    margin: auto;
+    padding: 1rem 2rem;
+    border: 1px solid #888;
+    width: 40%;
+    // box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    // -webkit-animation-name: animatetop;
+    // -webkit-animation-duration: 0.4s;
+    // animation-name: animatetop;
+    // animation-duration: 0.4s;
+
+  }
+  /* Add Animation */
+  @-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+  }
+  
+  @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+  }
+  
+  /* The Close Button */
+  .close {
+    color: rgb(59, 57, 57);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: rgb(255, 0, 0);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .modal-header {
+    padding: 1px 0px;
+    // background-color: #5cb85c;
+    color: rgb(0, 0, 0);
+  }
+  
+  .modal-body {
+    .error-alert{
+      background-color: rgb(249, 183, 183);
+      color: red;
+      height: 1rem;
+      padding: 1rem 0.5rem;
+      text-align: center;
+      border-radius: 0.5rem;
+    }
+  .radio-grp{
+    // padding: 2px 16px;
+    padding: 10px 0;
+    label span{
+        font-size: large;
+        font-weight: 900;
+    }
+    input[type='radio']{
+        accent-color: rgb(177, 27, 117);
+        border-color: rgb(238, 78, 166);
+    }
+}
+  }
+  .modal-footer {
+    padding: 20px 0px;
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    // background-color: #5cb85c;
+    color: white;
+  }
+  .otpContainer{
+    text-align: center;
+}
+.otpInput{
+    width: 2rem;
+    height: 3rem;
+    margin: 1vw;
+    outline: none;
+    font-size: 26px;
+    border-radius: 5px;
+    padding-left: 20px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    // background: $Dark;
+    box-shadow: 0 8px 32px 0 rgba(168, 205, 248, 0.37);
+    border-radius: 1rem;
+    @media screen and (max-width:600px) {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+.verify-profile{
+  text-align: center;
+  margin: 0 auto;
+  border: 0.2rem solid $Dark;
+  max-width: 30%;
+  border-radius: 1rem;
+  background-color: $Mist;
+  padding: 5rem;
+  h2{
+    font-size: 30px;
+  }
+  button.logout{
+    background-color: $Yellow;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid;
+    cursor: pointer;
+  }
+  button{
+    background-color: $Dark;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid;
+    font-size: larger;
+    color: $Light;
+    cursor: pointer;
+    &:hover{
+      transform: scale(1.25); 
+
+    }
+  }
+}

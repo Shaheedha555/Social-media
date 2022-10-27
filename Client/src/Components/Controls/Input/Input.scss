@@ -1,0 +1,64 @@
+@import '../../../Variables.scss';
+
+
+
+  
+  .instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    color: rgb(255, 0, 0);
+    // padding: 0.25rem 1rem;
+    position: relative;
+    text-align: left;
+    /* bottom: -10px; */
+}
+
+
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.hide {
+ display: none;
+}
+
+
+ .input-container{
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+  }
+  .form-container.login .input-container{
+    width: auto;
+  }
+  form .input-container label{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+   .input-container input{
+    height: 45px;
+    width: 97%;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    padding-left: 3%;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    background: #CAE4DB;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 1rem;
+  }
+  .input-container input:focus,
+  .input-container input:valid{
+    border-color: $Dark;
+  }
+  @media(max-width: 584px){
+   
+   form  .input-container{
+       margin-bottom: 15px;
+       width: 90%;
+     }
+    }
