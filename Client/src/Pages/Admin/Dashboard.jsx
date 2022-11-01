@@ -1,11 +1,11 @@
 import React from 'react'
-
-function Dashboard() {
+import Dashboard from '../../Components/Dashboard/Dashboard'
+function AdminDashboard() {
   return (
     <div>
-      Dashboard
+      <Dashboard/>
     </div>
   )
 }
 
-export default Dashboard
+export default AdminDashboard

@@ -18,10 +18,11 @@ import {AiOutlineInfoCircle} from 'react-icons/ai'
 import Modal from '../Modal/Modal'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../../Axios'
+import LoadingSpinner from '../LoadingSpinner/Spinner'
 
 
-const USER_REGEX = /^[A-z][A-z0-9-_!@#$&()-`.+,*" ]{4,23}$/;
-const USERNAME_REGEX = /^[A-z][A-z0-9_]{5,15}$/;
+const USER_REGEX = /^[A-z][A-z0-9-_!@#$&()-`.+,*" ]{3,23}$/;
+const USERNAME_REGEX = /^[A-z][A-z0-9_]{4,15}$/;
 
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
 const CONTACT_REGEX = /^[0-9+]{10,13}$/;
@@ -101,7 +102,7 @@ function RegisterForm() {
         console.log('home');
         navigate('/verify')
       }
-  
+      
       dispatch(reset())
     }, [user, isError, isSuccess, message, dispatch])
 
@@ -130,8 +131,8 @@ function RegisterForm() {
       const v3 = PWD_REGEX.test(data.password);
       const v4 = EMAIL_REGEX.test(data.email);
       const v5 = CONTACT_REGEX.test(data.contact);
-      console.log(v1,v2,v3,v4,v5 , data.password===data.matchPwd , data.password,data.matchPwd); 
-      if (!v1 || !v2  || !v3 || !v4 || !v5) {
+      // console.log(v1,v2,v3,v4,v5 , data.password===data.matchPwd , data.password,data.matchPwd); 
+      if (!v1 || !v2  || !v3 || !v4 || !v5 || userPresent) {
           setErrMsg("Invalid Entry");
           return;
       }
@@ -158,10 +159,8 @@ function RegisterForm() {
 
     return(
       <div className='form-container'>
-        <div style={{display:'flex',gap:'1rem'}}>
-          Already have an account? 
-          <Button class='primarySmall' onclick={()=>navigate('/login')} > Log In</Button>
-        </div>
+        {isLoading && <LoadingSpinner /> }
+       
       <h2 className='title'>Sign Up</h2>
       <div>
         <form onSubmit={onSubmit} action="" >
@@ -213,6 +212,19 @@ function RegisterForm() {
               />
 
               <Input
+                msgClass={contactFocus && data.contact && !validContact ? "instructions" : "offscreen"}
+                msg={msgs[5]}
+                focus={() => setContactFocus(true)}
+                blur={() => setContactFocus(false)}
+                name="contact"
+                type="number"
+                valid={validContact ? true : false}
+                placeholder="Contact"
+                value={data.contact}
+                handlechange={handlechange}
+              />
+
+              <Input
                 msgClass={pwdFocus && data.password && !validPwd ? "instructions" : "offscreen"}
                 msg={msgs[3]}
                 focus={() => setPwdFocus(true)}
@@ -240,47 +252,43 @@ function RegisterForm() {
 
 
 
-              <Input
-                msgClass={contactFocus && data.contact && !validContact ? "instructions" : "offscreen"}
-                msg={msgs[5]}
-                focus={() => setContactFocus(true)}
-                blur={() => setContactFocus(false)}
-                name="contact"
-                type="number"
-                valid={validContact ? true : false}
-                placeholder="Contact"
-                value={data.contact}
-                handlechange={handlechange}
-              />
+             
 
-              <Input
+              {/* <Input
                 msgClass='offscreen'
                 name="about"
                 valid={false}
                 placeholder="About"
                 value={data.about}
                 handlechange={handlechange}
-              />
+              /> */}
               <DatePicker
                 name="birthDate"
                 value={data.birthDate}
                 handlechange={handlechange}
               />
+                <Select
+                  name="country"
+                  value={data.country}
+                  handlechange={handlechange}
+                />
               <Radiogroup
                 name="gender"
                 value={data.gender}
                 handlechange={handlechange}
               />
-              <Select
-                name="country"
-                value={data.country}
-                handlechange={handlechange}
-              />
 
-              <Button class="primaryLarge" >Sign Up</Button>
             </div>
+            <div style={{margin:'0 auto',textAlign:'center'}}>
+              <Button class="primaryLarge" >Sign Up</Button>
+              <div style={{display:'flex',flexDirection:'row',justifyContent:'center'}}>
+          <p>Already have an account ? </p> 
+          <Button class='primarySmall' onclick={()=>navigate('/login')} > Log In</Button>
+        </div>
+              </div>
         </form>
       </div>
+       
     </div> 
     )
   

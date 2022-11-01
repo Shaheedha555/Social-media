@@ -63,9 +63,9 @@ function Header() {
     };
     const logOut = async () =>{
       console.log('logout');
-      //  dispatch(logout()) 
-      //  window.location.reload()
-       localStorage.removeItem('user')
+       dispatch(logout()) 
+       window.location.reload()
+      //  localStorage.removeItem('user')
 
       navigate('/')
     }
@@ -104,7 +104,7 @@ function Header() {
             <Badge badgeContent={0} color="error" style={{alignItems:"center"}} 
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
+            sx={{ ml: 2 ,cursor:'pointer'}}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}>

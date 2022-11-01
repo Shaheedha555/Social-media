@@ -11,10 +11,12 @@ import Button from '../Controls/Button/Button'
 import { useDispatch } from 'react-redux'
 import {sendOTP,verifyOTP} from '../../Features/Verify/verifySlice'
 import { useEffect } from 'react'
+import { logout } from '../../Features/Auth/authSlice'
 
 
 function Modal(props) {
     // const navigate = useNavigate()
+    console.log(props, '  prooo');
     const {user:{contact,email,name}} = props
     const [display,setDisplay] = useState('block')
     const [method,setMethod] = useState('email')
@@ -119,10 +121,7 @@ function Modal(props) {
                 setErr('Verification failed')}
 
       }
-      const resendOtp = async() =>{
-            console.log(method); 
-
-      }
+    
       const inputfocus = (elmnt) => { 
         if (elmnt.key === "Delete" || elmnt.key === "Backspace") {
           const next = elmnt.target.tabIndex - 2;
@@ -141,11 +140,14 @@ function Modal(props) {
         }
     
       }
-    // if(modal)
+
+      const logOut = async ()=>{
+        dispatch(logout())
+      }
   return (
     <div>
           <div className='verify-profile'>
-              <button className='logout' onClick={() => localStorage.removeItem('user')}>Logout</button>
+              <button className='logout' onClick={logOut}>Logout</button>
               <h2>{name}</h2>
               <h4>{email}</h4>
               <div>
@@ -196,11 +198,12 @@ function Modal(props) {
                      onClick={onclick}  
                      name={'method'} 
                      type={'radio'} 
-                     checked={ method === 'email' ? true : false }  
+                    //  checked={ method === 'email' ? true : false }  
+                    defaultChecked={true}
                      value={method} 
                      id='email' 
                     />
-                    <label htmlfor='email' ><span>Email</span>({email})</label>
+                    <label htmlFor='email' ><span>Email</span>({email})</label>
                 </div>
                 <div className="radio-grp">
 

@@ -1,76 +1,76 @@
-@import '../../../Variables.scss';
+// @import '../../../Variables.scss';
 
 
-// .input-container {
-//     display: flex;
-//     flex-direction: row;
-//     border-radius: 5px;
-//     height: 45px;
+// // .input-container {
+// //     display: flex;
+// //     flex-direction: row;
+// //     border-radius: 5px;
+// //     height: 45px;
 
-//     margin: 10px;
-//     width: fit-content;
-//   }
- 
- 
-//   @media screen and (max-width:500px) {
-//     .input-container  {
-//       width: 12rem;
-//     }
-//    }
-// //   .input-container label {
-// //     position: absolute;
-// //     top: -25px;
-// //     left:5px;
-// //     color: $Dark;
-// //     font-size: 16px;
-// //     z-index: 100;
-
+// //     margin: 10px;
+// //     width: fit-content;
 // //   }
+ 
+ 
+// //   @media screen and (max-width:500px) {
+// //     .input-container  {
+// //       width: 12rem;
+// //     }
+// //    }
+// // //   .input-container label {
+// // //     position: absolute;
+// // //     top: -25px;
+// // //     left:5px;
+// // //     color: $Dark;
+// // //     font-size: 16px;
+// // //     z-index: 100;
+
+// // //   }
   
-// select {
-//     position: relative;
-//     border-radius: 4px;
-//     border: none;
-//     font-size: 16px;
-//     line-height: 1;
-//     background-color: rgb(241, 241, 241);
-   
-//   }
-// //   select: {
+// // select {
+// //     position: relative;
+// //     border-radius: 4px;
 // //     border: none;
-// //   }
-  
-.input-container{
-    margin-bottom: 15px;
-    // width: calc(100% / 2 - 20px);
-  }
-.input-container label{
-    display: block;
-    font-weight: 500;
-    margin-bottom: 5px;
-  }
-  .input-container select{
-    height: 45px;
-    width: 100%;
-    outline: none;
-    font-size: 16px;
-    border-radius: 5px;
-    padding-left: 2%;
-    border: 1px solid #ccc;
-    border-bottom-width: 2px;
-    transition: all 0.3s ease;
-    background: $Light;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border-radius: 1rem;
-  }
-   .input-container select:focus,
-  .input-container select:valid{
-    border-color: $Dark;
-  }
-  @media(max-width: 584px){
+// //     font-size: 16px;
+// //     line-height: 1;
+// //     background-color: rgb(241, 241, 241);
    
-   form .user-details .input-container{
-       margin-bottom: 15px;
-       width: 90%;
-     }
-    }
+// //   }
+// // //   select: {
+// // //     border: none;
+// // //   }
+  
+// .input-container{
+//     margin-bottom: 15px;
+//     // width: calc(100% / 2 - 20px);
+//   }
+// .input-container label{
+//     display: block;
+//     font-weight: 500;
+//     margin-bottom: 5px;
+//   }
+//   .input-container select{
+//     height: 45px;
+//     width: 100%;
+//     outline: none;
+//     font-size: 16px;
+//     border-radius: 5px;
+//     padding-left: 2%;
+//     border: 1px solid #ccc;
+//     border-bottom-width: 2px;
+//     transition: all 0.3s ease;
+//     background: $Light;
+//     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+//     border-radius: 1rem;
+//   }
+//    .input-container select:focus,
+//   .input-container select:valid{
+//     border-color: $Dark;
+//   }
+//   @media(max-width: 584px){
+   
+//    form .user-details .input-container{
+//        margin-bottom: 15px;
+//        width: 90%;
+//      }
+//     }

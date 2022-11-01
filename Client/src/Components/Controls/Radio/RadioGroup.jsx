@@ -8,8 +8,16 @@ import { pink } from '@mui/material/colors';
 export default function Radiogroup(props) {
   const {name,value,handlechange} = props;
   return (
-    <FormControl >
-      <FormLabel id="demo-row-radio-buttons-group-label" sx={{color:pink[600]}}>Gender</FormLabel>
+    <div style={{width:'250px'}}>
+    <FormControl>
+      <FormLabel id="demo-row-radio-buttons-group-label" sx={{color:'black',fontSize:'12px','&$focused': {
+      color: 'black', '&$disabled': {
+      color: 'black',
+    },
+    '&$error': {
+      color: 'black',
+    },
+    },}}>Gender</FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
@@ -19,25 +27,36 @@ export default function Radiogroup(props) {
         value={value}
         >
         <FormControlLabel value="female"  control={<Radio  sx={{
-    color: pink[800],
+    color: 'black',
     '&.Mui-checked': {
-      color: pink[600],
-    },
-  }}/>} label="Female" />
+      color: 'black',
+     
+    },'& .MuiSvgIcon-root': {
+            fontSize: 16,
+          }
+  }}/>} label="Female" sx={{fontSize:'7px'}} />
         <FormControlLabel value="male" control={<Radio sx={{
-    color: pink[800],
+    color: 'black',
     '&.Mui-checked': {
-      color: pink[600],
-    },
+      color: 'black',
+      
+    },'& .MuiSvgIcon-root': {
+            fontSize: 16,
+          }
   }} />} label="Male" />
         <FormControlLabel value="other" control={<Radio sx={{
-    color: pink[800],
+    color:'black',
     '&.Mui-checked': {
-      color: pink[600],
+      color: 'black',
+        
     },
+    '& .MuiSvgIcon-root': {
+            fontSize: 16,
+          },
   }}/>} label="Other" />
         
       </RadioGroup>
     </FormControl>
+    </div>
   );
 }

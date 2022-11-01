@@ -16,7 +16,7 @@
 
 
 .valid {
-    color: limegreen;
+    color: rgb(8, 118, 8);
     margin-left: 0.25rem;
 }
 
@@ -26,8 +26,8 @@
 
 
  .input-container{
-    margin-bottom: 15px;
-    width: calc(100% / 2 - 20px);
+    // margin-bottom: 10px;
+    width: calc(100% / 2 - 10px);
   }
   .form-container.login .input-container{
     width: auto;
@@ -35,30 +35,51 @@
   form .input-container label{
     display: block;
     font-weight: 500;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
+    font-size: 12px;
   }
    .input-container input{
-    height: 45px;
-    width: 97%;
+    height: 40px;
+    width: 92%;
     outline: none;
-    font-size: 16px;
-    border-radius: 5px;
+    font-size: 12px;
+    border-radius: 1px;
     padding-left: 3%;
     border: 1px solid #ccc;
     border-bottom-width: 2px;
     transition: all 0.3s ease;
     background: #CAE4DB;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border-radius: 1rem;
+    border-radius: 0.3rem;
   }
   .input-container input:focus,
   .input-container input:valid{
     border-color: $Dark;
   }
+    .input-container select {
+      height: 43px;
+      width: 96%;
+      outline: none;
+      font-size: 16px;
+      // border-radius: 5px;
+      padding-left: 2%;
+      border: 1px solid #ccc;
+      border-bottom-width: 2px;
+      transition: all 0.3s ease;
+      background: $Light;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      border-radius: 0.3rem;
+    }
+  
+    .input-container select:focus,
+    .input-container select:valid {
+      border-color: $Dark;
+    }
   @media(max-width: 584px){
    
    form  .input-container{
        margin-bottom: 15px;
        width: 90%;
+       
      }
     }

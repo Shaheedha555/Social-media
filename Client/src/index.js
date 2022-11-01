@@ -11,10 +11,10 @@ const root = createRoot(container);
 root.render(
 
   <Provider store={store}>
-      <BrowserRouter>
+    <BrowserRouter>
       <App />
     </BrowserRouter>
-    </Provider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
