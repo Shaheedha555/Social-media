@@ -143,6 +143,7 @@ const userLogin = async (req, res, next) => {
           req.user = user;
           console.log(req.user);
           res.json({
+            id: user._id,
             name: user.name,
             email: user.email,
             contact: user.contact,
@@ -268,6 +269,7 @@ const verifyOTP = async (req, res, next) => {
                       .then(() => {
                         User.findOne({ email: data }).then((user) => {
                           res.json({
+                            id: user._id,
                             name: user.name,
                             email: user.email,
                             contact: user.contact,
@@ -317,7 +319,7 @@ const verifyContactOTP = (otp, mobile) => {
 
 const searchUser = async (req, res, next) => {
   try {
-    const keyword = req.params.search
+    const keyword = req.query.search
       ? {
           $or: [
             { name: { $regex: req.query.search, $options: "i" } },

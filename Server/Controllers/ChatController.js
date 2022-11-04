@@ -3,6 +3,7 @@ const User = require("../Models/user");
 
 const getAllChats = async (req, res, next) => {
   try {
+    console.log(req.user._id, "all chat");
     Chat.find({ users: { $in: [req.user._id] } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
@@ -23,16 +24,17 @@ const accessChat = async (req, res, next) => {
   try {
     const { userId } = req.body;
     if (!userId) res.json({ status: false, message: "No user Id" });
-    const chat = await Chat.findOne({
+    const chat = await Chat.find({
       isGroupChat: false,
       users: { $all: [req.user._id, userId] },
     }).populate("users", "-password");
+    console.log(chat);
     //   .populate("latestMessage");
     const isChat = await User.populate(chat, {
       path: "sender",
       select: "name email",
     });
-    if (isChat?.length > 0) res.json(isChat[0]);
+    if (chat?.length > 0) res.json(isChat[0]);
     else {
       const newChat = new Chat({
         isGroupChat: false,
@@ -44,6 +46,7 @@ const accessChat = async (req, res, next) => {
         "users",
         "-password"
       );
+      console.log(chat);
       res.json(chat);
     }
   } catch (error) {

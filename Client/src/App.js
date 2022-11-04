@@ -8,33 +8,18 @@ import Register from "./Pages/Register";
 import Verify from "./Pages/Verify";
 import AdminLogin from "./Pages/Admin/AdminLogin";
 import Dashboard from "./Pages/Admin/Dashboard";
-import { store } from "./app/store";
 import { useSelector } from "react-redux";
 import Chat from "./Pages/Chat";
 
 function App() {
-  // const [user,setUser] = useState(null)
   const item = useSelector((state) => state);
-  console.log(item, "  item");
   const user = item.auth.user;
-  // const user = store.getState().auth.user
-  console.log(user, "   store");
-
-  // const user =  JSON.parse(localStorage.getItem('user'))
-
-  // useEffect(()=>{
-  //    setUser(JSON.parse(localStorage.getItem('user')))
-  // },[])
-  // console.log(user , '  useffect user');
 
   const isLoggedIn = user?.token ? true : false;
-  console.log(user?.token);
   const isRegistered = user ? true : false;
-  console.log(isLoggedIn, isRegistered, " appp");
 
   const admin = JSON.parse(localStorage.getItem("admin"));
   const isAdmin = admin?.token ? true : false;
-  console.log(admin, isAdmin, "fff");
   return (
     <div className="App">
       <Routes>

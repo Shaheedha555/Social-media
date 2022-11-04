@@ -11,6 +11,7 @@ const port = process.env.PORT || 5000;
 const userRouter = require("./Routes/UserRouter");
 const adminRouter = require("./Routes/AdminRouter");
 const chatRouter = require("./Routes/ChatRouter");
+const MessageRouter = require("./Routes/MessageRouter");
 
 const connectDB = require("./config/database");
 
@@ -22,6 +23,7 @@ connectDB();
 app.use("/", userRouter);
 app.use("/admin", adminRouter);
 app.use("/chat", chatRouter);
+app.use("/message", MessageRouter);
 
 app.use(errorHandler);
 

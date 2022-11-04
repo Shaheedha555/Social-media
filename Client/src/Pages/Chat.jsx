@@ -1,11 +1,13 @@
-import React from 'react'
-
+import React from "react";
+import ChatPage from "../Components/Chat/ChatPage";
+import Header from "../Components/Header";
 function Chat() {
   return (
     <div>
-      chat page
+      <Header />
+      <ChatPage />
     </div>
-  )
+  );
 }
 
-export default Chat
+export default Chat;
