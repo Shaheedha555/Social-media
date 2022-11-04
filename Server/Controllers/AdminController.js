@@ -1,7 +1,6 @@
-const jwt = require('jsonwebtoken')
-// const User = require('../Models/User')
-const Admin = require('../Models/admin')
-
+const jwt = require('jsonwebtoken');
+const Admin = require('../Models/admin');
+const User = require('../Models/user');
 
 const adminLogin = async(req,res,next)=>{
     try {
@@ -34,7 +33,29 @@ const generateToken = (id)=>{
     return jwt.sign({ id }, process.env.JWT_SECRET,{expiresIn : '30d'})
 } 
 
+const getAllUsers = async(req,res,next)=>{
+    try {
+        const users = await User.find({})
+        console.log( users)
+        res.json({status:true,users:users})
+    } catch (error) {
+        next(error)
+    }
+}
 
+const blockUser = async (req,res,next)=>{
+    try {
+        const user = await User.findOne({_id:req.body.id})
+        User.findOneAndUpdate({_id:req.body.id},{$set:{ activeStatus: (user.activeStatus) ? false : true }}).then((s)=>{
+            console.log('blocked' ,s);
+            res.json({message:'blocked'})
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 module.exports ={
-    adminLogin
+    adminLogin,
+    getAllUsers,
+    blockUser
 }

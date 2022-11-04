@@ -3,15 +3,13 @@ const adminRouter = express.Router()
 // const { body, validationResult } = require('express-validator');
 const {adminProtect} = require('../middlewares/authMiddleware')
 
-const { adminLogin } = require('../Controllers/adminController');
+const { adminLogin,getAllUsers,blockUser } = require('../Controllers/adminController');
 
 // adminRouter.use(cors())  
 
 adminRouter.post('/login',adminLogin)
+adminRouter.post('/getAllUsers',getAllUsers)
+adminRouter.post('/blockUser',blockUser)
 
-
-adminRouter.get('/',(req,res)=>{
-    res.send('good')
-})
 
 module.exports = adminRouter
