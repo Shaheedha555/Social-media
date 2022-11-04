@@ -4,6 +4,8 @@ const User = require("../Models/user");
 const { validationResult } = require("express-validator");
 const accountSid = process.env.ACCOUNTS_ID;
 const authToken = process.env.AUTH_TOKEN;
+const userEmail = process.env.EMAIL_ID;
+const userPassword = process.env.EMAIL_PASSWORD;
 const client = require("twilio")(accountSid, authToken);
 const otpGenerator = require("otp-generator");
 const nodemailer = require("nodemailer");
@@ -12,11 +14,11 @@ const OTPModel = require("../Models/OTP");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_ID,
-    pass: process.env.EMAIL_PASSWORD,
+    user: userEmail,
+    pass: userPassword,
   },
 });
-console.log(process.env.EMAIL_ID, process.env.EMAIL_PASSWORD);
+
 transporter.verify((err, success) => {
   if (err) console.log(err);
   else {
@@ -34,7 +36,7 @@ const sendEmailOTP = async (email) => {
     });
     console.log(otp + "  otp");
     const mailOptions = {
-      from: process.env.EMAIL_ID,
+      from: userEmail,
       to: email,
       subject: "InstaBook",
       html: `<p>Your InstaBook OTP is : ${otp}.</p><p>This will <b>expire in 3 minutes</b>.</p>`,
