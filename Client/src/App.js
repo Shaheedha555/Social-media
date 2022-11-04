@@ -10,10 +10,11 @@ import AdminLogin from "./Pages/Admin/AdminLogin";
 import Dashboard from "./Pages/Admin/Dashboard";
 import { useSelector } from "react-redux";
 import Chat from "./Pages/Chat";
+import axios from "axios";
 
 function App() {
-  const item = useSelector((state) => state);
-  const user = item.auth.user;
+  const item = useSelector((state) => state.auth);
+  const user = item.user;
 
   const isLoggedIn = user?.token ? true : false;
   const isRegistered = user ? true : false;

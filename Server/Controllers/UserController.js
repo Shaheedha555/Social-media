@@ -4,6 +4,8 @@ const User = require("../Models/user");
 const { validationResult } = require("express-validator");
 const accountSid = process.env.ACCOUNTS_ID;
 const authToken = process.env.AUTH_TOKEN;
+const userEmail = process.env.EMAIL_ID;
+const userPassword = process.env.EMAIL_PASSWORD;
 const client = require("twilio")(accountSid, authToken);
 const otpGenerator = require("otp-generator");
 const nodemailer = require("nodemailer");
@@ -12,8 +14,8 @@ const OTPModel = require("../Models/OTP");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "shaheedhamolshahi@gmail.com",
-    pass: "thkgpudocbmdymjh",
+    user: userEmail,
+    pass: userPassword,
   },
 });
 
@@ -34,7 +36,7 @@ const sendEmailOTP = async (email) => {
     });
     console.log(otp + "  otp");
     const mailOptions = {
-      from: "shaheedhamolshahi@gmail.com",
+      from: userEmail,
       to: email,
       subject: "InstaBook",
       html: `<p>Your InstaBook OTP is : ${otp}.</p><p>This will <b>expire in 3 minutes</b>.</p>`,
@@ -233,7 +235,14 @@ const verifyOTP = async (req, res, next) => {
           { $set: { "verified.mobile": true } }
         );
         let token = generateToken(user._id);
-        res.json({ status: true, token });
+        res.json({
+          status: true,
+          token,
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          contact: user.contact,
+        });
       } else {
         res.json({ status: false, message: "verification failed" });
       }

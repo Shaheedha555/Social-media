@@ -1,93 +1,92 @@
-
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import verifyService from './verifyService'
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import verifyService from "./verifyService";
+const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
-}
+  message: "",
+  user: user ? user : null,
+};
 
 export const sendOTP = createAsyncThunk(
-  'verify/sendOTP',
-  async (data,thunkAPI) => {
+  "verify/sendOTP",
+  async (data, thunkAPI) => {
     try {
-      console.log('otp fn');
-      return await verifyService.sendOTP(data)
+      console.log("otp fn");
+      return await verifyService.sendOTP(data);
     } catch (error) {
       const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
-)
+);
 export const verifyOTP = createAsyncThunk(
-  'verify/verifyOTP',
-  async (data,thunkAPI) => {
+  "verify/verifyOTP",
+  async (data, thunkAPI) => {
     try {
-      return await verifyService.verifyOTP(data)
+      return await verifyService.verifyOTP(data);
     } catch (error) {
       const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
-)
+);
 
 export const verifySlice = createSlice({
-  name: 'verify',
+  name: "verify",
   initialState,
   reducers: {
     reset: (state) => {
-      state.isLoading = false
-      state.isSuccess = false
-      state.isError = false
-      state.message = ''
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.isError = false;
+      state.message = "";
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(sendOTP.pending, (state) => {
-        state.isLoading = true
+        state.isLoading = true;
       })
       .addCase(sendOTP.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.user = action.payload
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
       })
       .addCase(sendOTP.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-        state.user = null
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
       })
       .addCase(verifyOTP.pending, (state) => {
-        state.isLoading = true
+        state.isLoading = true;
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.user = action.payload
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-        state.user = null
-      })
-      
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      });
   },
-})
+});
 
-export const { reset } = verifySlice.actions
-export default verifySlice.reducer
+export const { reset } = verifySlice.actions;
+export default verifySlice.reducer;

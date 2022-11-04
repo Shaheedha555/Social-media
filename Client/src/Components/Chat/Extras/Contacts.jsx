@@ -12,7 +12,7 @@ import {
   getAllChat,
   getAllMessages,
 } from "../../../Features/Chat/chatSlice";
-function Contacts() {
+function Contacts({ getSenderName, getSenderId }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   // const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -52,13 +52,7 @@ function Contacts() {
     await dispatch(getAllMessages(selectedChat._id));
     toggleDrawer(false);
   };
-  const getSenderName = (user, users) => {
-    console.log(users[1], user);
-    return users[0]._id === user.id ? users[1].name : users[0].name;
-  };
-  const getSenderId = (user, users) => {
-    return users[0]._id === user.id ? users[1]._id : users[0]._id;
-  };
+
   const toggleDrawer = (action) => () => {
     setToggle(action);
   };
