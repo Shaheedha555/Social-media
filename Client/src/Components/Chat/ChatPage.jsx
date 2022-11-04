@@ -22,6 +22,13 @@ function Chat() {
     // console.log(chat);
   }, []);
   const { user, chat, selectedChat } = useSelector((state) => state.chat);
+  const getSenderName = (user, users) => {
+    console.log(users[1], user);
+    return users[0]._id === user.id ? users[1].name : users[0].name;
+  };
+  const getSenderId = (user, users) => {
+    return users[0]._id === user.id ? users[1]._id : users[0]._id;
+  };
   //   const [currentUser, setCurrentUser] = useState(undefined);
   //   const [contacts, setContacts] = useState([]);
   //   const [currentChat, setCurrentChat] = useState(undefined);
@@ -64,7 +71,7 @@ function Chat() {
       {/* <Header /> */}
       <Container>
         <div className="container">
-          <Contacts />
+          <Contacts getSenderName={getSenderName} getSenderId={getSenderId} />
           {/* // contacts={chat}
           // currentUser={user}
           // changeChat={handleChatChange} */}
@@ -74,6 +81,8 @@ function Chat() {
             <div>Welcome user</div>
           ) : (
             <ChatContainer
+              getSenderName={getSenderName}
+              getSenderId={getSenderId}
               // currentChat={selectedChat}
               // currentUser={user}
               socket={socket}
@@ -86,8 +95,8 @@ function Chat() {
 }
 
 const Container = styled.div`
-  padding-top: 8vh;
-  height: 90vh;
+  padding-top: 9.5vh;
+  height: 89vh;
   // width: 100vw;
   display: flex;
   flex-direction: column;

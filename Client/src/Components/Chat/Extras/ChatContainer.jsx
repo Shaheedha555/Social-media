@@ -8,12 +8,12 @@ import { getAllMessages } from "../../../Features/Chat/chatSlice";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function ChatContainer({ socket }) {
+export default function ChatContainer({ socket, getSenderName, getSenderId }) {
   const [allMessages, setAllMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState([]);
   const scrollRef = useRef();
   const dispatch = useDispatch();
-  const { selectedChat, messages } = useSelector((state) => state.chat);
+  const { selectedChat, messages, user } = useSelector((state) => state.chat);
   useEffect(() => {
     async function fetchData() {
       const response = await dispatch(getAllMessages(selectedChat._id));
@@ -21,7 +21,7 @@ export default function ChatContainer({ socket }) {
     }
     fetchData();
   }, [selectedChat]);
-  console.log(messages);
+  console.log(selectedChat);
   // const handleSendMsg = async (msg) => {
   //   const data = await axios.post(addMessageRoute, {
   //     from: currentUser._id,
@@ -63,7 +63,7 @@ export default function ChatContainer({ socket }) {
             /> */}
           </div>
           <div className="username">
-            <h3>{selectedChat?.name}</h3>
+            <h3>{getSenderName(user, selectedChat.users)}</h3>
           </div>
         </div>
         {/* <LOgOut /> */}
@@ -108,6 +108,8 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
+      background-color: #00303f;
+
     .user-details {
       display: flex;
       align-items: center;

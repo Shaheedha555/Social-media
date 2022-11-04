@@ -7,6 +7,7 @@ const protect = async (req, res, next) => {
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
+    // req.headers.activeStatus
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
@@ -14,8 +15,11 @@ const protect = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       req.user = await User.findById(decoded.id).select("-password");
-
-      next();
+      if (req.user.activeStatus) {
+        next();
+      } else {
+        res.status(401).json({ blocked: "you are blocked by admin" });
+      }
     } catch (error) {
       console.log(error);
       res.status(401).json("error");

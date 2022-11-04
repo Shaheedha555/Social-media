@@ -12,11 +12,11 @@ const OTPModel = require("../Models/OTP");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "shaheedhamolshahi@gmail.com",
-    pass: "thkgpudocbmdymjh",
+    user: process.env.EMAIL_ID,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
-
+console.log(process.env.EMAIL_ID, process.env.EMAIL_PASSWORD);
 transporter.verify((err, success) => {
   if (err) console.log(err);
   else {
@@ -34,7 +34,7 @@ const sendEmailOTP = async (email) => {
     });
     console.log(otp + "  otp");
     const mailOptions = {
-      from: "shaheedhamolshahi@gmail.com",
+      from: process.env.EMAIL_ID,
       to: email,
       subject: "InstaBook",
       html: `<p>Your InstaBook OTP is : ${otp}.</p><p>This will <b>expire in 3 minutes</b>.</p>`,
@@ -233,7 +233,14 @@ const verifyOTP = async (req, res, next) => {
           { $set: { "verified.mobile": true } }
         );
         let token = generateToken(user._id);
-        res.json({ status: true, token });
+        res.json({
+          status: true,
+          token,
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          contact: user.contact,
+        });
       } else {
         res.json({ status: false, message: "verification failed" });
       }

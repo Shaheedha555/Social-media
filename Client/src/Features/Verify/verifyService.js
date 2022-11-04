@@ -1,26 +1,24 @@
+import axios from "../../Axios";
 
-import axios from '../../Axios'
+const sendOTP = async (data) => {
+  const response = await axios.post("/sendOTP", { data });
+  console.log("axios otp sent");
 
-const sendOTP = async(data)=>{
-    console.log('axios otp');
-    const response = await axios.post('/sendOTP',{data})
-    console.log('axios otp senr');
-   
-    return response.data
-
-}
+  return response.data;
+};
 
 const verifyOTP = async (data) => {
-    console.log(data);
-    const response = await axios.post('/verifyOTP', {data})
-  
-    return response.data
+  console.log(data);
+  const response = await axios.post("/verifyOTP", { data });
+  if (response.data.status) {
+    localStorage.setItem("user", JSON.stringify(response.data));
   }
+  return response.data;
+};
 
+const verifyService = {
+  sendOTP,
+  verifyOTP,
+};
 
-  const verifyService = {
-   sendOTP,
-   verifyOTP
-  }
-  
-  export default verifyService;
+export default verifyService;
