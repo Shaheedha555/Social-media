@@ -1,11 +1,11 @@
-import React from 'react'
-import Dashboard from '../../Components/Dashboard/Dashboard'
+import React from "react";
+import Dashboard from "../../Components/Dashboard/Dashboard";
 function AdminDashboard() {
   return (
     <div>
-      <Dashboard/>
+      <Dashboard />
     </div>
-  )
+  );
 }
 
-export default AdminDashboard
+export default AdminDashboard;
