@@ -64,7 +64,6 @@ const sendEmailOTP = async (email) => {
 
 const userRegister = async (req, res, next) => {
   try {
-    console.log("register route");
     const {
       name,
       email,
@@ -76,15 +75,6 @@ const userRegister = async (req, res, next) => {
       about,
       country,
     } = req.body;
-    // const errors = validationResult(req);
-
-    // if (!errors.isEmpty()) {
-    //         return res.status(400).json({
-    //             success: false,
-    //             errors: errors.array(),
-    //             error : 'Something went wrong!'
-    //         });
-    // }
     const user = await User.findOne({ email });
     if (user) {
       console.log("user exist");
@@ -116,36 +106,22 @@ const userRegister = async (req, res, next) => {
 
 const userLogin = async (req, res, next) => {
   try {
-    console.log("login route");
     const { id, password } = req.body;
-    console.log(id, password);
-    // const errors = validationResult(req);
-
-    // if (!errors.isEmpty()) {
-    //         return res.status(400).json({
-    //             status: false,
-    //             errors: errors.array(),
-    //             message : "Something went wrong!"
-    //         });
-    // }
+    console.log(id, password, " user credentials");
     let item = id.match(/@/) ? "email" : "username";
-    console.log(item, "  item");
     const user =
       item === "email"
         ? await User.findOne({ email: id })
         : await User.findOne({ username: id });
-    console.log(user);
     if (user && (await bcrypt.compare(password, user.password))) {
       console.log("usermatched");
       console.log(user.name, user.email);
       if (user.activeStatus) {
         if (user.verified.email || user.verified.contact) {
           let token = generateToken(user._id);
-          console.log(token);
           req.user = user;
-          console.log(req.user);
           res.json({
-            id: user._id,
+            _id: user._id,
             name: user.name,
             email: user.email,
             contact: user.contact,
@@ -176,9 +152,7 @@ const userLogin = async (req, res, next) => {
 const searchUsername = async (req, res, next) => {
   try {
     const username = req.body.username;
-    console.log(username);
     User.find({ username: username }).then((result) => {
-      console.log(result);
       if (result.length != 0) {
         console.log("username present");
         res.json({ status: false, message: "user alreasy present" });
@@ -199,18 +173,15 @@ const generateToken = (id) => {
 
 const sendOTP = async (req, res, next) => {
   try {
-    const item = req.body.data;
-    const stringItem = item.toString();
-    console.log(item);
-    if (stringItem.match(/^[0-9+]{10,13}$/)) {
+    const data = req.body;
+    if (data.contact) {
       console.log("mob");
-      const otp = await sendContactOTP(item);
+      await sendContactOTP(data.contact);
 
-      console.log({ status: true, otp });
       res.json({ status: true });
     } else {
       console.log("email");
-      await sendEmailOTP(item);
+      await sendEmailOTP(data.email);
       res.json({ status: true });
     }
   } catch (err) {
@@ -220,19 +191,16 @@ const sendOTP = async (req, res, next) => {
 
 const verifyOTP = async (req, res, next) => {
   try {
-    const {
-      data: { OTP, data },
-    } = req.body;
-    console.log(OTP, data);
-    const stringData = data.toString();
-    if (stringData.match(/^[0-9+]{10,13}$/)) {
+    const { contact, email, OTP } = req.body;
+    // const stringData = data.toString();
+    if (contact) {
       console.log("its mobile nm");
-      const verification = await verifyContactOTP(OTP, data);
+      const verification = await verifyContactOTP(OTP, contact);
       console.log(verification.status);
       if (verification.status === "approved") {
         const user = await User.findOneAndUpdate(
-          { contact: data },
-          { $set: { "verified.mobile": true } }
+          { contact: contact, email: email },
+          { $set: { "verified.contact": true } }
         );
         let token = generateToken(user._id);
         res.json({
@@ -248,16 +216,14 @@ const verifyOTP = async (req, res, next) => {
       }
     } else {
       console.log("its email");
-      OTPModel.find({ user: data })
+      OTPModel.find({ user: email })
         .then(async (result) => {
-          console.log(result);
           if (result.length > 0) {
             const { expiresAt } = result[result.length - 1];
-            console.log(expiresAt);
             const sentOtp = result[result.length - 1].otp;
             if (expiresAt < Date.now()) {
               console.log("expired");
-              OTPModel.findOneAndDelete({ user: data })
+              OTPModel.findOneAndDelete({ user: email })
                 .then(() => {
                   res.json({ status: false, message: "OTP Expired" });
                 })
@@ -269,14 +235,13 @@ const verifyOTP = async (req, res, next) => {
               const same = await bcrypt.compare(OTP, sentOtp);
               if (same) {
                 User.updateOne(
-                  { email: data },
+                  { email: email },
                   { $set: { "verified.email": true } }
                 )
                   .then((user) => {
-                    console.log(user);
-                    OTPModel.deleteMany({ user: data })
+                    OTPModel.deleteMany({ user: email })
                       .then(() => {
-                        User.findOne({ email: data }).then((user) => {
+                        User.findOne({ email: email }).then((user) => {
                           res.json({
                             id: user._id,
                             name: user.name,
@@ -339,7 +304,6 @@ const searchUser = async (req, res, next) => {
       : {};
 
     const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
-    console.log(users);
     res.json(users);
   } catch (error) {
     next(error);

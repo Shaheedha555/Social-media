@@ -1,12 +1,12 @@
-import React from 'react'
-import AdminLoginForm from '../../Components/AdminLoginForm/AdminLoginForm'
+import React from "react";
+import AdminLoginForm from "../../Components/AdminLoginForm/AdminLoginForm";
 
 function AdminLogin() {
   return (
-    <div>
-      <AdminLoginForm/>
-    </div>
-  )
+    // <div>
+    <AdminLoginForm />
+    // </div>
+  );
 }
 
-export default AdminLogin
+export default AdminLogin;

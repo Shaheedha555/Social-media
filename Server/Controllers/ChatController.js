@@ -3,7 +3,6 @@ const User = require("../Models/user");
 
 const getAllChats = async (req, res, next) => {
   try {
-    console.log(req.user._id, "all chat");
     Chat.find({ users: { $in: [req.user._id] } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
@@ -14,6 +13,7 @@ const getAllChats = async (req, res, next) => {
           path: "latestMessage.sender",
           select: "name pic email",
         });
+        console.log(results, "  chats");
         res.status(200).json(results);
       });
   } catch (error) {
@@ -23,12 +23,12 @@ const getAllChats = async (req, res, next) => {
 const accessChat = async (req, res, next) => {
   try {
     const { userId } = req.body;
+    console.log(userId);
     if (!userId) res.json({ status: false, message: "No user Id" });
     const chat = await Chat.find({
       isGroupChat: false,
       users: { $all: [req.user._id, userId] },
     }).populate("users", "-password");
-    console.log(chat);
     //   .populate("latestMessage");
     const isChat = await User.populate(chat, {
       path: "sender",
@@ -46,13 +46,13 @@ const accessChat = async (req, res, next) => {
         "users",
         "-password"
       );
-      console.log(chat);
       res.json(chat);
     }
   } catch (error) {
     next(error);
   }
 };
+
 const createGroupChat = async (req, res, next) => {
   try {
     if (!req.body.users || !req.body.name) {
@@ -139,7 +139,7 @@ const removeFromGroup = async (req, res) => {
     next(error);
   }
 };
-const addGroup = async (req, res, next) => {
+const addToGroup = async (req, res, next) => {
   const { chatId, userId } = req.body;
 
   // check if the requester is admin
@@ -167,12 +167,7 @@ const addGroup = async (req, res, next) => {
     next(error);
   }
 };
-const createNewChat = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
+
 const removeChat = async (req, res, next) => {
   try {
   } catch (error) {
@@ -186,7 +181,6 @@ module.exports = {
   createGroupChat,
   renameGroup,
   removeFromGroup,
-  addGroup,
-  createNewChat,
+  addToGroup,
   removeChat,
 };

@@ -1,19 +1,14 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import Header from '../Components/Header';
-import Modal from '../Components/Modal/Modal2'
+import React from "react";
+import { useSelector } from "react-redux";
+import Modal from "../Components/Modal/Modal";
 
 function Verify() {
-    const store  = useSelector((state)=>state.auth);
-    const user = store.user
-    // const userDetails = localStorage.getItem('user')
-    console.log(user);
+  const { user } = useSelector((state) => state.auth);
   return (
-    <div>
-      {/* <Header/> */}
-      <Modal  user={user} />
-    </div>
-  )
+    // <div>
+    <Modal user={user} />
+    // </div>
+  );
 }
 
-export default Verify
+export default Verify;

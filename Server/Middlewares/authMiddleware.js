@@ -4,6 +4,7 @@ const Admin = require("../Models/admin");
 
 const protect = async (req, res, next) => {
   let token;
+  console.log(token);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -11,9 +12,8 @@ const protect = async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
-      console.log(token + " tokennn");
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+      console.log(decoded.id, "    iiid");
       req.user = await User.findById(decoded.id).select("-password");
       if (req.user.activeStatus) {
         next();

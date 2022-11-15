@@ -1,15 +1,12 @@
-import React from 'react'
-import Header from '../Components/Header'
-import RegisterForm from '../Components/RegisterForm/RegisterForm'
+import React from "react";
+import RegisterForm from "../Components/RegisterForm/RegisterForm";
 
 function Register() {
   return (
-    <div>
-      {/* <Header/> */}
-      <RegisterForm/>
-      
-    </div>
-  )
+    // <div>
+    <RegisterForm />
+    // </div>
+  );
 }
 
-export default Register
+export default Register;

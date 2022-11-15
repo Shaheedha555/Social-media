@@ -49,6 +49,113 @@ const ChatLoading = () => {
             height={20}
           />
         </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={50}
+            height={50}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={190}
+            height={20}
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={50}
+            height={50}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={190}
+            height={20}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={50}
+            height={50}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={190}
+            height={20}
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={50}
+            height={50}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={190}
+            height={20}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={50}
+            height={50}
+          />
+          <Skeleton
+            animation="wave"
+            variant="rectangular"
+            width={190}
+            height={20}
+          />
+        </div>
       </Stack>
     </>
   );

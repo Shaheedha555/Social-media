@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../Controls/Button/Button";
 import Input from "../Controls/Input/Input";
-import { login, reset } from "../../Features/Auth/authSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../Features/Auth/authSlice";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../LoadingSpinner/Spinner";
 
@@ -21,27 +21,24 @@ function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-
+  console.log(message, " err msg");
   useEffect(() => {
     setErrMsg("");
   }, [id, password]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(id.includes("@"), "  mcc");
     const v1 = id.includes("@")
       ? EMAIL_REGEX.test(id)
       : USERNAME_REGEX.test(id);
     const v2 = PWD_REGEX.test(password);
-    console.log(v1, v2);
     if (!v1 || !v2) {
       setErrMsg("Invalid Entry");
       return;
     }
-    console.log(id, password);
 
     const response = await dispatch(login({ id, password }));
 
@@ -49,12 +46,23 @@ function LoginForm() {
       navigate("/");
     } else {
       setErrMsg(response.payload.message);
-      console.log(response.payload.message, "   mshhh");
+      console.log(message, "   mshhh");
     }
   };
+
   return (
     <div className="form-container login">
-      {isLoading && <LoadingSpinner />}
+      {isLoading && (
+        <LoadingSpinner
+          style={{
+            height: "50px",
+            width: "50px",
+            position: "absolute",
+            top: "45%",
+            left: "45%",
+          }}
+        />
+      )}
 
       <h2>Login</h2>
       <div>
@@ -66,7 +74,6 @@ function LoginForm() {
           >
             {errMsg}
           </p>
-          {/* <div className="login-details"> */}
 
           <Input
             type="text"
@@ -88,12 +95,16 @@ function LoginForm() {
           {/* </div> */}
         </form>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <p style={{ paddingBottom: "5px" }}>Not yet registered?</p>
-        <Button class="primarySmall" onclick={() => navigate("/register")}>
-          {" "}
-          Sign Up
-        </Button>
+      <div style={{ textAlign: "center" }}>
+        <p style={{ paddingBottom: "5px" }}>
+          Not yet registered?{" "}
+          <span
+            style={{ color: "darkblue", fontWeight: "600", cursor: "pointer" }}
+            onClick={() => navigate("/register")}
+          >
+            Sign Up
+          </span>
+        </p>
       </div>
     </div>
   );

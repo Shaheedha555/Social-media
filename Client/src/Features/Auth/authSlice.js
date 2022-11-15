@@ -3,7 +3,7 @@ import authService from "./authService";
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem("user"));
-
+console.log(user, " locl user");
 const initialState = {
   user: user ? user : null,
   isError: false,
@@ -99,9 +99,15 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.user = action.payload;
+        if (action.payload.status) {
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.user = action.payload;
+        } else {
+          state.isError = true;
+          state.message = action.payload.message;
+          state.isLoading = false;
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;

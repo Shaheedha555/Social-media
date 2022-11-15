@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.scss";
 import Protected from "./Protected";
 import Home from "./Pages/Home";
@@ -7,33 +7,35 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Verify from "./Pages/Verify";
 import AdminLogin from "./Pages/Admin/AdminLogin";
-import Dashboard from "./Pages/Admin/Dashboard";
+import UserManagement from "./Pages/Admin/UserManagement";
 import { useSelector } from "react-redux";
 import Chat from "./Pages/Chat";
-import axios from "axios";
+import ProtectedRoutes from "./Routes/ProtectedRoutes";
+import PublicRoutes from "./Routes/PublicRoutes";
+import PrivateRoutes from "./Routes/PublicRoutes";
 
 function App() {
-  const item = useSelector((state) => state.auth);
-  const user = item.user;
-
-  const isLoggedIn = user?.token ? true : false;
-  const isRegistered = user ? true : false;
-
-  const admin = JSON.parse(localStorage.getItem("admin"));
-  const isAdmin = admin?.token ? true : false;
   return (
     <div className="App">
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Protected isLoggedIn={isLoggedIn}>
-              <Home />
-            </Protected>
-          }
-        />
-
-        <Route
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/verify" element={<Verify />} />
+        </Route>
+        <Route element={<PublicRoutes />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<PrivateRoutes />}>
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<UserManagement />} />
+        </Route>
+      </Routes>
+    </div>
+  );
+  {
+    /* <Route
           path="/verify"
           element={
             // <Protected isLoggedIn={isRegistered}>
@@ -75,9 +77,11 @@ function App() {
               <Login />
             )
           }
-        />
+        /> */
+  }
 
-        <Route
+  {
+    /* <Route
           path="/admin"
           element={
             isAdmin ? <Navigate to={"/admin/dashboard"} /> : <AdminLogin />
@@ -86,11 +90,10 @@ function App() {
 
         <Route
           path="/admin/dashboard"
-          element={isAdmin ? <Dashboard /> : <Navigate to={"/admin"} />}
+          element={isAdmin ? <UserManagement /> : <Navigate to={"/admin"} />}
         />
-      </Routes>
-    </div>
-  );
+      </Routes> */
+  }
 }
 
 export default App;

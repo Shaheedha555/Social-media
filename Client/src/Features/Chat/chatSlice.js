@@ -7,11 +7,28 @@ const initialState = {
   isLoading: false,
   selectedChat: null,
   chat: [],
-  user: JSON.parse(localStorage.getItem("user")),
-  messages: [],
   message: "",
+  isMessageLoading: false,
+  isChatLoading: false,
+  notification: [],
 };
-
+export const searchUser = createAsyncThunk(
+  "/searchUser",
+  async (keyword, thunkAPI) => {
+    try {
+      const response = await chatService.searchUser(keyword);
+      return response.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 export const getChat = createAsyncThunk(
   "chat/getChat",
   async (id, thunkAPI) => {
@@ -28,11 +45,11 @@ export const getChat = createAsyncThunk(
     }
   }
 );
+
 export const getAllChat = createAsyncThunk(
   "chat/getAllChat",
   async (thunkAPI) => {
     try {
-      console.log("chat slice");
       return await chatService.getAllChat();
     } catch (error) {
       const message =
@@ -61,32 +78,120 @@ export const getAllMessages = createAsyncThunk(
     }
   }
 );
+export const sendMessage = createAsyncThunk(
+  "message/send",
+  async (data, thunkAPI) => {
+    try {
+      return await chatService.sendMessage(data);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const createGroupChat = createAsyncThunk(
+  "chat/group",
+  async (data, thunkAPI) => {
+    try {
+      return await chatService.createGroupChat(data);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const renameGroup = createAsyncThunk(
+  "chat/group/rename",
+  async (data, thunkAPI) => {
+    try {
+      return await chatService.renameGroup(data);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const addToGroup = createAsyncThunk(
+  "chat/group/add",
+  async (data, thunkAPI) => {
+    try {
+      return await chatService.addToGroup(data);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const removeFromGroup = createAsyncThunk(
+  "chat/group/remove",
+  async (data, thunkAPI) => {
+    try {
+      return await chatService.removeFromGroup(data);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 export const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
     reset: (state) => {
+      state.selectedChat = null;
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = false;
-      state.messages = [];
+    },
+    selectedChat: (state, action) => {
+      state.selectedChat = action.payload.data;
+    },
+    createAlert: (state, action) => {
+      state.notification.push({
+        time: Date.now(),
+        message: action.payload.message,
+      });
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getChat.pending, (state) => {
-        state.isLoading = true;
+        state.isChatLoading = true;
       })
       .addCase(getChat.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isChatLoading = false;
         state.isSuccess = true;
         state.selectedChat = action.payload.data;
       })
-      .addCase(getAllChat.rejected, (state, action) => {
-        state.isLoading = false;
+      .addCase(getChat.rejected, (state, action) => {
+        state.isChatLoading = false;
         state.isError = true;
-        state.message = action.payload;
-        // state.selectedChat = null;
+        state.message = action.payload.data.message;
       })
       .addCase(getAllChat.pending, (state, action) => {
         state.isLoading = true;
@@ -96,16 +201,35 @@ export const chatSlice = createSlice({
         state.isSuccess = true;
         state.chat = action.payload.data;
       })
+      .addCase(getAllChat.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
       .addCase(getAllMessages.pending, (state, action) => {
-        state.isLoading = true;
+        state.isMessageLoading = true;
       })
       .addCase(getAllMessages.fulfilled, (state, action) => {
-        console.log(action.payload.data, "  payload");
-        state.isLoading = false;
-        state.messages = action.payload.data;
+        state.isMessageLoading = false;
+      })
+      .addCase(getAllMessages.rejected, (state, action) => {
+        state.isMessageLoading = false;
+      })
+      .addCase(createGroupChat.pending, (state) => {
+        state.isChatLoading = true;
+      })
+      .addCase(createGroupChat.fulfilled, (state, action) => {
+        state.isChatLoading = false;
+        state.isSuccess = true;
+        state.selectedChat = action.payload.data;
+      })
+      .addCase(createGroupChat.rejected, (state, action) => {
+        state.isChatLoading = false;
+        state.isError = true;
+        state.message = action.payload.data.message;
       });
   },
 });
 
-export const { reset } = chatSlice.actions;
+export const { reset, createAlert } = chatSlice.actions;
 export default chatSlice.reducer;

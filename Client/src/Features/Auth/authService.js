@@ -14,7 +14,7 @@ const login = async (userData) => {
   if (response.data.status) {
     localStorage.setItem("user", JSON.stringify(response.data));
   } else {
-    console.log("no data");
+    console.log(response.data, "no data");
   }
 
   return response.data;

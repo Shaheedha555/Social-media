@@ -3,14 +3,14 @@ button{
    cursor: pointer;
 }
 @mixin primaryButton($size,$top,$side){ 
-    background-color: $Dark ;
+    background-color: $Yellow ;
     color: $secondaryLight;
     font-size: large;
     border: 2px solid $Dark;
     border-radius: 5px;
     padding: $top $side ; 
     width:$size;
-    max-width: 25vw;
+    max-width: 250px;
     transition: 0.4s;
     margin: $top;
     margin-left: 0;
@@ -39,7 +39,7 @@ button{
 
 
 .primaryLarge {
-    @include primaryButton(20vw,15px ,30px);
+    @include primaryButton(10vw,15px ,30px);
    @media screen and (max-width:680px) {
          font-size: 0.60rem;
          width: 40vw;

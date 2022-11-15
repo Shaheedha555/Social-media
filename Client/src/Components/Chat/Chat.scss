@@ -1,0 +1,34 @@
+@import '../../Variables.scss';
+
+.chatlist{
+    background-color: $Pink;
+    .lists{
+        background-color: $Dark;
+        border-radius: 0.5rem;
+        &.selected{
+            background-color: #FFE6F7;
+        }
+    }
+}
+.chatbox{
+    background-color: $Light;
+    border-radius: 0.5rem;
+}
+.chat-header{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: space-between;
+    width:75vw;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    padding: 1rem 1.5rem;
+    background-color: gray;
+    @media screen and (max-width:900px) {
+    width:100vw;
+    }
+}
+.messages{
+    padding-top:'5rem';
+    width: 100%;
+}

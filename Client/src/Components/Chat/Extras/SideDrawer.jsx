@@ -13,9 +13,10 @@ import {
   ListItemText,
   TextField,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
-import ChatLoading from "./Extras/ChatLoading";
+import ChatLoading from "./ChatLoading";
 
 function SideDrawer(props) {
   const {
@@ -34,10 +35,20 @@ function SideDrawer(props) {
           <Button
             variant="outlined"
             size="large"
-            sx={{ fontSize: "1.5rem", marginLeft: "10px", color: "#00303f" }}
+            sx={{
+              fontSize: "1rem",
+              color: "#00303f",
+              borderColor: "black",
+              padding: " 10px",
+            }}
             onClick={onclick}
           >
-            <BsSearch />
+            <BsSearch
+              style={{
+                paddingRight: "5px",
+                fontSize: "1.5rem",
+              }}
+            />
           </Button>
         </Tooltip>
       </Box>
@@ -86,10 +97,19 @@ function SideDrawer(props) {
         <List>
           {loading ? (
             <ChatLoading />
-          ) : (
+          ) : searchResult.length > 0 ? (
             searchResult.map((user, index) => (
               <ListItem key={user._id} disablePadding>
-                <ListItemButton onClick={() => accessChat(user._id, index)}>
+                <ListItemButton
+                  sx={{
+                    backgroundColor: "gray",
+                    margin: "2px 15px",
+                    borderRadius: "5px",
+                  }}
+                  onClick={() => {
+                    accessChat(user._id);
+                  }}
+                >
                   <ListItemIcon>
                     <Avatar />
                   </ListItemIcon>
@@ -97,7 +117,8 @@ function SideDrawer(props) {
                 </ListItemButton>
               </ListItem>
             ))
-          )}
+          ) : // <Typography>No User found</Typography>
+          null}
           {/* ))} */}
         </List>
         {/* </Box> */}

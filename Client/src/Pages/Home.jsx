@@ -1,13 +1,14 @@
-import React from 'react'
-import Header from '../Components/Header'
-
+import React from "react";
+import Header from "../Components/Header/Header";
+const user = localStorage.getItem("user");
+console.log(user, "  bbb");
 function Home() {
   return (
-    <div>
-      <Header></Header>
+    <>
+      <Header />
       <h1>Welcome to home</h1>
-    </div>
-  )
+    </>
+  );
 }
 
-export default Home
+export default Home;

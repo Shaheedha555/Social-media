@@ -3,38 +3,60 @@ import Picker from "emoji-picker-react";
 import styled from "styled-components";
 import { IoMdSend } from "react-icons/io";
 import { BsEmojiSmileFill } from "react-icons/bs";
-export default function ChatInput({ handleSendMsg }) {
+import EmojiPicker from "emoji-picker-react";
+export default function ChatInput({
+  handleSendMsg,
+  value,
+  onChange,
+  setValue,
+}) {
   const [showEmojiPicker, setEmojiPicker] = useState(false);
-  const [msg, setmsg] = useState("");
+  // const [msg, setmsg] = useState("");
   const handleEmojiPickerHideShow = () => {
     setEmojiPicker(!showEmojiPicker);
   };
-  const handleEmojiClick = (event, emoji) => {
-    let message = msg;
+  const handleEmojiClick = (emoji, event) => {
+    let message = value;
     message += emoji.emoji;
-    setmsg(message);
+    setValue(message);
   };
   const sendMsg = (event) => {
     event.preventDefault();
-    if (msg.length > 0) {
-      handleSendMsg(msg);
-      setmsg("");
+    setValue(value.trimStart());
+    if (value.length > 0) {
+      handleSendMsg(value);
+      setValue("");
     }
+  };
+  const enterMessage = (e) => {
+    if (e.key === "Enter") sendMsg(e);
   };
   return (
     <Container>
       <div className="button-container">
         <div className="emoji">
           <BsEmojiSmileFill onClick={handleEmojiPickerHideShow} />
-          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
+          {showEmojiPicker && (
+            <div className="emojiSet">
+              <Picker
+                onEmojiClick={handleEmojiClick}
+                height="380px"
+                skinTonesDisabled="true"
+                emojiStyle="google"
+                previewConfig={{ showPreview: false }}
+              />
+            </div>
+          )}
         </div>
       </div>
-      <form className="input-container" onSubmit={(e) => sendMsg(e)}>
-        <input
-          type="text"
-          placeholder="type your message here"
-          value={msg}
-          onChange={(e) => setmsg(e.target.value)}
+      <form className="input-container" onSubmit={sendMsg}>
+        <textarea
+          style={{ fontSize: "15px" }}
+          autoFocus="true"
+          placeholder="your message here"
+          value={value}
+          onChange={onChange}
+          onKeyDown={enterMessage}
         />
         <button className="submit" type="submit">
           <IoMdSend />
@@ -49,7 +71,8 @@ const Container = styled.div`
   grid-template-columns: 5% 95%;
   background-color: #080420;
   padding: 0 2rem;
-  @media screen and (min-width: 720px) and (max-width: 1080px) {
+  height: 20%;
+  @media screen and (max-width: 1080px) {
     padding: 0 1rem;
     gap: 1rem;
   }
@@ -65,9 +88,15 @@ const Container = styled.div`
         color: #ffff00c8;
         cursor: pointer;
       }
+      .emojiSet {
+        position: absolute;
+        top: -380px;
+        height: 100px;
+      }
       .emoji-picker-react {
         position: absolute;
-        top: -350px;
+        top: 0px;
+        right: 100px;
         background-color: #080420;
         box-shadow: 0 5px 10px #9a86f3;
         border-color: #9a86f3;
@@ -95,18 +124,19 @@ const Container = styled.div`
   }
   .input-container {
     width: 100%;
+    height: 80%;
     border-radius: 2rem;
     display: flex;
     align-items: center;
     gap: 2rem;
     background-color: #ffffff34;
-    input {
+    textarea {
       width: 90%;
-      height: 60%;
+      height: 90%;
       background-color: transparent;
       color: white;
       border: none;
-      padding-left: 1rem;
+      padding-left: 2rem;
       font-size: 1.2rem;
       &::selection {
         background-color: #9a86f3;
