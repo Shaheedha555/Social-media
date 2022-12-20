@@ -3,11 +3,10 @@ It is a social media platform made by using NodeJS on backend, React JS in front
 ### Features include:
 
 - Registration and verification (email and contact)
-- JWT authentication
 - Post creation, like and comment
 - Chat - single and group
 - Follow friends
-- View profile
+- View profiles
 
 ### Technologies used :
 
@@ -21,3 +20,24 @@ It is a social media platform made by using NodeJS on backend, React JS in front
 ![Socket.io](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101)
 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+
+| Technology              | Description                      |
+|-------------------------|----------------------------------|
+| Node JS, Express JS     | For backend                      |
+| React JS                | For frontend                     |
+| Mongoose                | Database library                 |
+| SASS, Styled components | For styling                      |
+| MaterialUI              | For components                   |
+| Nodemailer              | For sending emails               |
+| Twilio                  | For mobile verification          |
+| Axios                   | For API calls                    |
+| Bcrypt                  | For password hashing             |
+| Cloudinary              | For file upload & storage        |
+| Socket Io               | For live chat and notification   |
+| Otp-generator           | To generate random OTP           |
+| Cors                    | To connect with different domain |
+| Dotenv                  | To store environment variables   |
+| JWT                     | For authentication of requests   |
+| React icons             | For icons                        |
+| Emoji picker            | To get various emojis            |
+| Redux, redux-toolkit    | To manage state in react         |
